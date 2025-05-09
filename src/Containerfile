@@ -66,8 +66,7 @@ RUN set -exu \
     /usr/lib/systemd/system/plymouth* \
     /usr/lib/systemd/system/sockets.target.wants/*initctl* \
     /usr/lib/systemd/system/sockets.target.wants/*udev* \
-    /usr/lib/systemd/system/systemd-update-utmp* \
-  && systemctl daemon-reload
+    /usr/lib/systemd/system/systemd-update-utmp*
 
 COPY rootfs /
 
