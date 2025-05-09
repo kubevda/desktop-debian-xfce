@@ -1,0 +1,9 @@
+#!/bin/bash
+
+faketty () {
+  script -qfec "$(printf "%q " "$@")"
+}
+
+# optionally:
+# faketty /sbin/agetty --autologin ${USER} --noclear - xterm
+faketty /usr/bin/login -f ${USER}
