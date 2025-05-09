@@ -13,9 +13,10 @@ RUN set -exu \
       ca-certificates \
       coreutils \
       curl \
-      dbus-x11 \
       dbus \
+      dbus-x11 \
       expect-dev \
+      fastfetch \
       firefox-esr \
       gettext-base \
       iproute2 \

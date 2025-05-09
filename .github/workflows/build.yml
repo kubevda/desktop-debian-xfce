@@ -66,6 +66,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: src/
+          pull: true
           file: src/Containerfile
           platforms: ${{ env.PLATFORMS }}
           push: true
