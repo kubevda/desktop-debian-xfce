@@ -67,7 +67,6 @@ echo pts/1 >> /etc/securetty
 
 mkdir -pv /run/dbus
 
-sudo --preserve-env --set-home --user="${USER}" \
-  /usr/bin/supervisord \
-    -n \
-    -c /etc/supervisor/supervisord.conf
+/usr/bin/supervisord \
+  -n \
+  -c /etc/supervisor/supervisord.conf
