@@ -8,7 +8,7 @@ echo "Setting up user account: ${USER}"
 
 groupadd \
   --gid "${UID}" \
-  "${GROUP}"
+    "${GROUP}"
 
 useradd \
   --uid "${UID}" \
@@ -17,12 +17,16 @@ useradd \
   --shell /bin/bash \
     "${USER}"
 
+usermod \
+  -a -G \
+    adm,sudo,video,audio,tty,users,xpra,pulse \
+      "${USER}"
+
 passwd -d "${USER}"
 
 echo "Setting up pulseaudio"
 mkdir -pv "${HOME}/.config/pulse"
 echo "load-module module-native-protocol-unix auth-anonymous=1" > "${HOME}/.config/pulse/default.pa"
-
 
 echo "Setting up /run/user/${UID}"
 mkdir -p "/run/user/${UID}"
@@ -30,19 +34,19 @@ chmod 0700 "/run/user/${UID}"
 chown "${USER}":"${GROUP}" "/run/user/${UID}"
 
 if [[ "${ENABLE_ROOT}" == "true" ]] ; then
-    echo "Allowing passwordless sudo for ${USER}"
-    echo "${USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+  echo "Allowing passwordless sudo for ${USER}"
+  echo "${USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 fi
 
 echo "Setting up user environment"
 
 # First setup VNC socket directory
 if [[ -z "${DISPLAY_SOCK_ADDR}" ]] ; then
-    if [[ -n "${VNC_SOCK_ADDR}" ]] ; then
-        export DISPLAY_SOCK_ADDR="${VNC_SOCK_ADDR}"
-    else
-        export DISPLAY_SOCK_ADDR="/run/user/${UID}/vnc.sock"
-    fi
+  if [[ -n "${VNC_SOCK_ADDR}" ]] ; then
+    export DISPLAY_SOCK_ADDR="${VNC_SOCK_ADDR}"
+  else
+    export DISPLAY_SOCK_ADDR="/run/user/${UID}/vnc.sock"
+  fi
 fi
 echo "Setting up VNC socket directory at $(dirname ${DISPLAY_SOCK_ADDR})"
 mkdir -pv "$(dirname ${DISPLAY_SOCK_ADDR})"
@@ -53,7 +57,7 @@ chown -Rv "${USER}":"${GROUP}" "${HOME}"
 
 find /etc/default -type f -print | xargs -I{} bash -c '/usr/bin/envsubst < "$1" > "$1"' _ {}
 
-env | tee -a /etc/default/kubevda
+env > /etc/default/kubevda
 
 # Allow an automatic shell at the pts. This will trigger systemd-user.
 cat << EOF | tee /etc/pam.d/login

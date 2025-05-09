@@ -5,5 +5,5 @@ faketty () {
 }
 
 # optionally:
-# faketty /sbin/agetty --autologin ${USER} --noclear - xterm
-faketty /usr/bin/login -f ${USER}
+faketty /usr/sbin/agetty --autologin ${USER} --noclear - xterm
+# faketty /usr/bin/login -f "${USER}"
