@@ -61,4 +61,4 @@ RUN set -exu \
 
 COPY rootfs /
 
-CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
+CMD ["/bin/bash", "/entrypoint.sh"]
