@@ -14,6 +14,7 @@ RUN set -exu \
       coreutils \
       curl \
       dbus-x11 \
+      dbus \
       expect-dev \
       firefox-esr \
       gettext-base \
