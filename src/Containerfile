@@ -31,15 +31,14 @@ RUN set -exu \
       pavucontrol \
       pulseaudio \
       sudo \
-      systemd \
-      systemd-sysv \
-      tasksel \
+      supervisor \
       tigervnc-standalone-server \
       tzdata \
       udev \
       vim \
       wget \
       x11-utils \
+      xfce4 \
       xz-utils \
       yq
 
@@ -70,14 +69,4 @@ RUN set -exu \
 
 COPY rootfs /
 
-RUN set -exu \
-  && chmod +x /usr/local/sbin/init \
-  && chmod +x /usr/local/sbin/fakegetty \
-  && systemctl enable user-init \
-  && systemctl --user --global enable display.service \
-  && systemctl --user --global enable pulseaudio.service \
-  && systemctl --user --global enable xfce4.service
-
-WORKDIR /root
-VOLUME ["/sys/fs/cgroup"]
-ENTRYPOINT ["/usr/local/sbin/init"]
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
