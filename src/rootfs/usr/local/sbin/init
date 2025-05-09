@@ -51,11 +51,7 @@ chown -Rv "${USER}":"${GROUP}" "$(dirname ${DISPLAY_SOCK_ADDR})"
 echo "Granting ${USER} ownership of ${HOME}"
 chown -Rv "${USER}":"${GROUP}" "${HOME}"
 
-envsubstFunc() {
-  cat "$1" | /usr/bin/envsubst | tee "$1"
-}
-export -f envsubstFunc
-find /etc/default -type f -print | xargs -I{} bash -c 'envsubstFunc "$@"' _ {}
+find /etc/default -type f -print | xargs -I{} bash -c '/usr/bin/envsubst < "$1" > "$1"' _ {}
 
 env | tee -a /etc/default/kubevda
 
