@@ -54,6 +54,10 @@ RUN set -exu \
 RUN set -exu \
   && apt-get -yq clean
 
+RUN set -exu \
+  && mkdir -pv /var/log/supervisor \
+  && chmod 777 /var/log/supervisor
+
 COPY rootfs /
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
