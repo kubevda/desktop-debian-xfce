@@ -40,6 +40,11 @@ RUN set -exu \
       wget \
       x11-utils \
       xfce4 \
+      xfce4-goodies \
+      xfce4-pulseaudio-plugin \
+      xfce4-screenshooter \
+      xfce4-taskmanager \
+      xfce4-terminal \
       xz-utils \
       yq
 
