@@ -50,14 +50,26 @@ jobs:
       - name: Setup Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Image
-        uses: docker/build-push-action@v5
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          tags: |
+            type=raw,value=latest,priority=1000
+            type=ref,event=tag,priority=900
+            type=raw,value=${{ github.sha }},priority=800
+          images: |
+            ${{ env.IMAGE_NAME }}
+
+      - name: Build and push Docker image
         id: build
+        uses: docker/build-push-action@v6
         with:
           context: src/
           file: src/Containerfile
-          push: true
-          tags: ${{ env.IMAGE_NAME }}:${{ env.VERSION }} ${{ env.IMAGE_NAME }}:${{ github.sha }}
           platforms: ${{ env.PLATFORMS }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=local,src=/home/runner/.${{ env.IMAGE_NAME }}.buildx-cache
           cache-to: type=local,dest=/home/runner/.${{ env.IMAGE_NAME }}.buildx-cache
