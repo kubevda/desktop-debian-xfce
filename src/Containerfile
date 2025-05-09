@@ -54,19 +54,6 @@ RUN set -exu \
 RUN set -exu \
   && apt-get -yq clean
 
-RUN set -exu \
-  && ls /usr/lib/systemd/system/sysinit.target.wants/ | grep -v systemd-tmpfiles-setup | xargs -i{} rm -vf /usr/lib/systemd/system/sysinit.target.wants/{} \
-  && rm -vf \
-    /etc/systemd/system/*.wants/* \
-    /usr/lib/systemd/system/anaconda.target.wants/* \
-    /usr/lib/systemd/system/basic.target.wants/* \
-    /usr/lib/systemd/system/local-fs.target.wants/* \
-    /usr/lib/systemd/system/multi-user.target.wants/* \
-    /usr/lib/systemd/system/plymouth* \
-    /usr/lib/systemd/system/sockets.target.wants/*initctl* \
-    /usr/lib/systemd/system/sockets.target.wants/*udev* \
-    /usr/lib/systemd/system/systemd-update-utmp*
-
 COPY rootfs /
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]

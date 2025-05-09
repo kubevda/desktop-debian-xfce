@@ -1,6 +1,6 @@
 # desktop-debian-xfce
 
-XFCE desktop on Debian
+XFCE desktop on Debian for WebMesh-VDI
 
 <https://github.com/kubevda/desktop-debian-xfce/pkgs/container/vdimage-debian-trixie-xfce>
 
